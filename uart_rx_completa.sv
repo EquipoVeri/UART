@@ -1,28 +1,49 @@
-	module uart_rx_completa(
+module uart_rx_completa
+(
     input clk,
     input reset,
     input rx,
     output [7:0] q,
-    output paridad, clk_dividido_out
+    output paridad
     );
 
 
-wire clk_dividido_w, enable_w;
-wire [10:0]q_w;
+wire [10:0] q_w;
+wire enablemax_w;
+wire enable_reg_w;
+wire enablehalf_w;
+wire flag_w;
 
-assign paridad = q_w[1];
-assign clk_dividido_out= clk_dividido_w;
-assign q = q_w[9:2];
+assign paridad = q_w[9];
+assign q = q_w[8:1];
 
-shift_register_er u1 (.clk(clk_dividido_w),.reset(reset),.enable(enable_w),.d(rx),.q(q_w));
+shift_register_er u1
+(
+	.clk(clk),
+	.reset(reset),
+	.enable(flag_w),
+	.d(rx),
+	.q(q_w)
+);
 	 
-uart_rx   			u2 ( .rx(rx),.clk_2br(clk_dividido_w),.reset(reset),.enable(enable_w) );	 
+uart_rx u2 
+(
+	.rx(rx),
+	.clk(clk),
+	.reset(reset),
+	.enable_flag(flag_w),
+	.enable_max(enablemax_w),
+	.enable_half(enablehalf_w)
+);	 
 
-
-frecuency_divider u3 ( .clk(clk),.reset(reset),.clk_dividido(clk_dividido_w));
-	 
-	 
-	 
+CounterWithFunction_RX counter_rx
+(
+	.clk(clk),
+	.reset(reset),
+	.enable_max(enablemax_w),
+	.enable_half(enablehalf_w),
+	.flag(flag_w) 
+);
 	 
 	 
 endmodule
