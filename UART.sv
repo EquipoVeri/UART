@@ -19,7 +19,7 @@ assign ReceivedData = Q_w;
 	 
 uart_rx_completa Receive(
 	.clk(clk),
-	.reset(~reset),
+	.reset(reset),
 	.rx(SerialDataRx),
 	.q(Q_w),
 	.paridad(par_w)

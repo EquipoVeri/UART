@@ -14,8 +14,8 @@ wire enable_reg_w;
 wire enablehalf_w;
 wire flag_w;
 
-assign paridad = q_w[9];
-assign q = q_w[8:1];
+assign paridad = q_w[1];
+assign q = q_w[9:2];
 
 shift_register_er u1
 (

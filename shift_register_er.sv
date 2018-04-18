@@ -7,18 +7,20 @@ module shift_register_er
     input reset,
     input enable,
     input d,
-    output [WORD_LENGTH-1:0] q
+    output reg [WORD_LENGTH-1:0] q
 );
 
+//wire [WORD_LENGTH-1:0] q_w;
 
-always_ff @(posedge reset, posedge clk)
+always_ff @(negedge reset, posedge clk)
 	begin
-		if (reset)
+		if (reset == 1'b0)
 			q <= 0;
 		else
 			if (enable)
-				q <= {d,q[WORD_LENGTH-1:1]};
+				q <= {q[WORD_LENGTH-2:0], d};
 	end
-	
+
+//assign q = q_w;
 
 endmodule

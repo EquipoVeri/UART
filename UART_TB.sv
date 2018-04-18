@@ -8,24 +8,24 @@ bit reset;
 logic [7:0] DataToTransmit;
 bit SerialDataRx;
 bit Transmit;
-bit ClearInterrupt;
-bit RxInterrupt;
-bit clkdivide;
+//bit ClearInterrupt;
+//bit RxInterrupt;
+//bit clkdivide;
 bit ParityError;
 bit SerialOutputTx;
 logic [7:0] ReceivedData;
 
-Uart
+UART
 DUV
 (	
 	 .DataToTransmit(DataToTransmit),
 	 .SerialDataRx(SerialDataRx),
-    .reset(reset),
-    .Transmit(Transmit),
-    .clk(clk),
-	 .ClearInterrupt(ClearInterrupt),
-	 .RxInterrupt(RxInterrupt),
-	 .clkdivide(clkdivide),
+       	.reset(reset),
+         .Transmit(Transmit),
+         .clk(clk),
+	// .ClearInterrupt(ClearInterrupt),
+	// .RxInterrupt(RxInterrupt),
+	// .clkdivide(clkdivide),
 	 .ParityError(ParityError),
 	 .SerialOutputTx(SerialOutputTx),
 	 .ReceivedData(ReceivedData)
@@ -39,7 +39,7 @@ initial // Clock generator
   end
 /*********************************************************/
 initial begin // reset generator
-	#0 reset = 1;
+	#0 reset = 0;
 	#0 Transmit = 0;
 	#0 SerialDataRx = 1;
 
@@ -48,18 +48,18 @@ end
 /*********************************************************/
 
 initial begin 
-	#5 reset = 0;
-	//#5 SerialDataRx = 0; //start
-	#0 SerialDataRx = 0;
-	#5208 SerialDataRx = 0;
-	#5208 SerialDataRx = 1;
-	#5208 SerialDataRx = 1;
-	#5208 SerialDataRx = 1;
-	#5208 SerialDataRx = 0;
-	#5208 SerialDataRx = 0;
-	#5208 SerialDataRx = 1;
-	#5208 SerialDataRx = 1;//paridad
-	#5208 SerialDataRx = 1;
+	#5 reset = 1;
+	#5 SerialDataRx = 0; //start
+	#868 SerialDataRx = 1;  
+	#868 SerialDataRx = 0; 
+	#868 SerialDataRx = 1;
+	#868 SerialDataRx = 0;
+	#868 SerialDataRx = 1;
+	#868 SerialDataRx = 0;
+	#868 SerialDataRx = 1;
+	#868 SerialDataRx = 0;
+	#868 SerialDataRx = 1;//paridad
+	#868 SerialDataRx = 1; //stop
 
 end
 

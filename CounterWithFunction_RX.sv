@@ -29,7 +29,7 @@ assign limit = (enable_half) ? HALF_VALUE[NBITS_FOR_COUNTER - 1:0] : MAXIMUM_VAL
 			Count_logic <= {NBITS_FOR_COUNTER{1'b0}};
 		else begin
 				if(enable_max | enable_half)
-					if(Count_logic == MAXIMUM_VALUE - 1)
+					if(Count_logic == limit - 1)
 						Count_logic <= 0;
 					else
 						Count_logic <= Count_logic + 1'b1;
